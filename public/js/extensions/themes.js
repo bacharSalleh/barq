@@ -10,6 +10,8 @@ export default function(ctx) {
   const btn = document.getElementById("theme-btn");
   let current = localStorage.getItem("ttb-theme") || "dark";
   let rainAnim = null;
+  const canvas = document.getElementById("matrix-rain");
+  let cols = 0, drops = [];
 
   function apply(id) {
     document.documentElement.dataset.theme = id;
@@ -57,8 +59,6 @@ export default function(ctx) {
   }
 
   // ─── Matrix rain ──────────────────────────────────────────────
-  const canvas = document.getElementById("matrix-rain");
-  let cols = 0, drops = [];
 
   function startMatrixRain() {
     if (rainAnim) return;
