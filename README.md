@@ -56,24 +56,7 @@ public/
 No webpack. No babel. No TypeScript. ES modules loaded by the browser.
 
 ## Extensions (72)
-
-Each extension is a single file in `public/js/extensions/`. Enable/disable by toggling one line in `app.js`.
-
-**Terminal:** split panes, tab groups, tab pinning, tab drag, workspaces, profiles, scroll mode, recording
-
-**Files:** explorer, viewer/editor, quick open, recent dirs, file drop
-
-**Git:** branch/status/diff, visual graph, 13 commands
-
-**Dev:** docker dashboard, SSH manager, database browser, cron manager, port forwarding, network tools, process manager, perf monitor, run configs, env viewer/switcher, smart commands, project dashboard
-
-**Productivity:** command palette, search, command history, prompt library, clipboard history, scratchpad, calculator, todo tracker, secret vault (AES-256-GCM)
-
-**Utilities:** JSON viewer, regex tester, color picker, diff viewer, markdown preview, man pages, cheat sheets, dev utils (base64/URL/UUID/SHA), timezone converter, alias manager, log viewer
-
-**Claude Code:** background notifications (done/permission), status bar state tracking, conversation capture (survives alt screen exit), Shift+Enter for multi-line input
-
-**UI:** 6 themes, context menu, font controls, error/warning line highlighting, notifications, scroll-to-bottom FAB, welcome screen
+... !
 
 ## Extension API
 
@@ -107,7 +90,6 @@ export default function(ctx) {
 | `Ctrl+Shift+N` | Scratchpad |
 | `Ctrl+Shift+R` | Command history |
 | `Ctrl+Shift+V` | Clipboard history |
-| `Shift+Enter` | Newline (don't submit) |
 
 ## License
 
