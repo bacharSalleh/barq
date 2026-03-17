@@ -86,9 +86,9 @@ export default function(ctx) {
     function draw() {
       tick++;
       // Only advance drops every 3rd frame (~20fps instead of 60)
-      const advance = tick % 3 === 0;
+      const advance = tick % 6 === 0;
 
-      cctx.fillStyle = "rgba(0, 10, 0, 0.04)";
+      cctx.fillStyle = "rgba(0, 10, 0, 0.03)";
       cctx.fillRect(0, 0, canvas.width, canvas.height);
       cctx.font = fontSize + "px monospace";
 
