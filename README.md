@@ -27,6 +27,13 @@ Open `http://localhost:3300`.
 npm run dev    # start + auto-open browser
 ```
 
+### Install from GitHub (no clone)
+
+```bash
+npm install -g github:bacharSalleh/barq
+barq
+```
+
 **Requires:** Node.js 18+, C compiler (cc/gcc/clang), macOS or Linux.
 
 ## Why DOM?
