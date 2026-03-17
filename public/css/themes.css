@@ -59,7 +59,7 @@
 [data-theme="matrix"] #grid-bg { background: none; }
 
 /* ─── Matrix rain canvas ─── */
-#matrix-rain { display: none; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35; }
+#matrix-rain { display: none; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.08; }
 [data-theme="matrix"] #matrix-rain { display: block; }
 
 /* ─── Dark+ animated effects ─── */
@@ -76,7 +76,7 @@
   position: absolute; left: 0; right: 0; height: 3px; z-index: 2;
   pointer-events: none;
   background: linear-gradient(90deg, transparent 5%, var(--accent) 30%, #fff 50%, var(--accent) 70%, transparent 95%);
-  box-shadow: 0 0 20px 4px var(--accent), 0 0 60px 8px rgba(167,139,250,0.3);
+  box-shadow: 0 0 12px 2px var(--accent), 0 0 30px 4px rgba(167,139,250,0.15);
   opacity: 0;
   animation: scanner 6s ease-in-out infinite;
 }
@@ -91,9 +91,9 @@
 
 @keyframes scanner {
   0% { top: -2%; opacity: 0; }
-  3% { opacity: 0.8; }
-  50% { opacity: 0.9; }
-  97% { opacity: 0.8; }
+  3% { opacity: 0.15; }
+  50% { opacity: 0.2; }
+  97% { opacity: 0.15; }
   100% { top: 100%; opacity: 0; }
 }
 
