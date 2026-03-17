@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
-const { spawn } = require("child_process");
+const { spawn, execSync } = require("child_process");
 const path = require("path");
+const fs = require("fs");
 const os = require("os");
+
+const ROOT = path.join(__dirname, "..");
 
 const args = process.argv.slice(2);
 let PORT = process.env.PORT || 3300;
@@ -22,10 +25,49 @@ for (let i = 0; i < args.length; i++) {
   }
 }
 
-const serverPath = path.join(__dirname, "..", "server.js");
+// ─── Pre-flight checks ────────────────────────────────────────
+console.log(`\n  ⚡ barq — starting up\n`);
 
-// Start server
-const child = spawn(process.execPath, [serverPath], {
+// Check node_modules
+if (!fs.existsSync(path.join(ROOT, "node_modules"))) {
+  console.log("  📦 Installing dependencies...");
+  try {
+    execSync("npm install", { cwd: ROOT, stdio: "inherit" });
+    console.log("  ✓ Dependencies installed\n");
+  } catch {
+    console.error("  ✗ Failed to install dependencies. Run: cd " + ROOT + " && npm install");
+    process.exit(1);
+  }
+}
+
+// Check Cascadia Code font
+const fontPath = path.join(ROOT, "node_modules", "@fontsource", "cascadia-code");
+if (fs.existsSync(fontPath)) {
+  console.log("  ✓ Cascadia Code font ready");
+} else {
+  console.log("  ⚠ Cascadia Code font missing — reinstall: npm install @fontsource/cascadia-code");
+}
+
+// Check PTY helper
+const ptyPath = path.join(ROOT, "pty-helper");
+if (fs.existsSync(ptyPath)) {
+  console.log("  ✓ PTY helper compiled");
+} else {
+  console.log("  🔧 Compiling PTY helper...");
+  try {
+    execSync("cc -o pty-helper pty-helper.c 2>/dev/null || cc -o pty-helper pty-helper.c -lutil", { cwd: ROOT, stdio: "ignore" });
+    console.log("  ✓ PTY helper compiled");
+  } catch {
+    console.log("  ✗ PTY helper compilation failed — need a C compiler (cc/gcc/clang)");
+    console.log("    Install Xcode CLI tools: xcode-select --install");
+    process.exit(1);
+  }
+}
+
+console.log(`  ✓ Port ${PORT}\n`);
+
+// ─── Start server ──────────────────────────────────────────────
+const child = spawn(process.execPath, [path.join(ROOT, "server.js")], {
   stdio: "inherit",
   env: { ...process.env, PORT: String(PORT) },
 });
