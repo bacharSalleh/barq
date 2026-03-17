@@ -10,7 +10,8 @@
     "start": "node server.js",
     "dev": "node bin/barq.js",
     "stop": "pkill -f 'node server.js' 2>/dev/null; echo 'Stopped'",
-    "build:pty": "cc -o pty-helper pty-helper.c 2>/dev/null || cc -o pty-helper pty-helper.c -lutil 2>/dev/null || true"
+    "build:pty": "cc -o pty-helper pty-helper.c 2>/dev/null || cc -o pty-helper pty-helper.c -lutil 2>/dev/null || true",
+    "postinstall": "npm run build:pty"
   },
   "keywords": [
     "terminal",

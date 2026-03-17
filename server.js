@@ -101,7 +101,7 @@ wss.on("connection", (ws) => {
   ws.on("message", raw => {
     let msg; try { msg = JSON.parse(raw); } catch { return; }
     if (msg.type === "init") { if (!bridge) startBridge(msg.cwd); return; }
-    if (!bridge) startBridge();
+    if (!bridge) return;
     if (msg.type === "input") bridge.stdin.write(msg.data);
     else if (msg.type === "resize") bridge.stdin.write(`\x1b]R;${msg.rows};${msg.cols}\x07`);
     else if (msg.type === "get-cwd") {
