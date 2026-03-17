@@ -10,9 +10,7 @@
     "start": "node server.js",
     "dev": "node bin/barq.js",
     "stop": "pkill -f 'node server.js' 2>/dev/null; echo 'Stopped'",
-    "build:pty": "cc -o pty-helper pty-helper.c 2>/dev/null || cc -o pty-helper pty-helper.c -lutil 2>/dev/null || true",
-    "postinstall": "node -e \"try{require('child_process').execSync('cc -o pty-helper pty-helper.c',{stdio:'ignore'})}catch{try{require('child_process').execSync('cc -o pty-helper pty-helper.c -lutil',{stdio:'ignore'})}catch{}}\"",
-    "prepare": "node -e \"\" "
+    "build:pty": "cc -o pty-helper pty-helper.c 2>/dev/null || cc -o pty-helper pty-helper.c -lutil 2>/dev/null || true"
   },
   "keywords": [
     "terminal",
