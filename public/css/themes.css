@@ -59,7 +59,7 @@
 [data-theme="matrix"] #grid-bg { background: none; }
 
 /* ─── Matrix rain canvas ─── */
-#matrix-rain { display: none; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.12; }
+#matrix-rain { display: none; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.18; }
 [data-theme="matrix"] #matrix-rain { display: block; }
 
 /* ─── Dark+ animated effects ─── */
@@ -70,21 +70,30 @@
   background-size: 24px 24px;
 }
 
-/* Scanner line */
+/* Scanner line — thick glowing beam */
 #scan-line {
   display: none;
-  position: absolute; left: 0; right: 0; height: 2px; z-index: 2;
+  position: absolute; left: 0; right: 0; height: 3px; z-index: 2;
   pointer-events: none;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.4;
-  animation: scanner 4s linear infinite;
+  background: linear-gradient(90deg, transparent 5%, var(--accent) 30%, #fff 50%, var(--accent) 70%, transparent 95%);
+  box-shadow: 0 0 20px 4px var(--accent), 0 0 60px 8px rgba(167,139,250,0.3);
+  opacity: 0;
+  animation: scanner 6s ease-in-out infinite;
 }
 [data-theme="dark+"] #scan-line { display: block; }
 
+/* Scanner trail glow */
+[data-theme="dark+"] #scan-line::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 40px;
+  background: linear-gradient(180deg, rgba(167,139,250,0.15), transparent);
+  pointer-events: none;
+}
+
 @keyframes scanner {
-  0% { top: 0; opacity: 0; }
-  5% { opacity: 0.4; }
-  95% { opacity: 0.4; }
+  0% { top: -2%; opacity: 0; }
+  3% { opacity: 0.8; }
+  50% { opacity: 0.9; }
+  97% { opacity: 0.8; }
   100% { top: 100%; opacity: 0; }
 }
 

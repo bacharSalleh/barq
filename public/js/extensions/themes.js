@@ -82,10 +82,14 @@ export default function(ctx) {
     const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF";
     const fontSize = 14;
 
+    let tick = 0;
     function draw() {
-      cctx.fillStyle = "rgba(0, 10, 0, 0.06)";
+      tick++;
+      // Only advance drops every 3rd frame (~20fps instead of 60)
+      const advance = tick % 3 === 0;
+
+      cctx.fillStyle = "rgba(0, 10, 0, 0.04)";
       cctx.fillRect(0, 0, canvas.width, canvas.height);
-      cctx.fillStyle = "#00ff41";
       cctx.font = fontSize + "px monospace";
 
       for (let i = 0; i < cols; i++) {
@@ -93,17 +97,21 @@ export default function(ctx) {
         const x = i * fontSize;
         const y = drops[i] * fontSize;
 
-        // Brighter head
-        if (Math.random() > 0.5) {
-          cctx.fillStyle = "#aaffaa";
-          cctx.fillText(ch, x, y);
+        // Bright white head
+        cctx.fillStyle = "#ffffff";
+        cctx.fillText(ch, x, y);
+
+        // Trailing glow
+        if (drops[i] > 1) {
+          const prevCh = chars[Math.random() * chars.length | 0];
           cctx.fillStyle = "#00ff41";
-        } else {
-          cctx.fillText(ch, x, y);
+          cctx.fillText(prevCh, x, (drops[i] - 1) * fontSize);
         }
 
-        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
+        if (advance) {
+          if (y > canvas.height && Math.random() > 0.98) drops[i] = 0;
+          drops[i]++;
+        }
       }
 
       rainAnim = requestAnimationFrame(draw);
