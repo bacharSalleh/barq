@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>barq</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/cascadia-code/index.css">
+<link rel="stylesheet" href="/css/themes.css">
+<link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/ui.css">
+<link rel="stylesheet" href="/css/splits.css">
+<link rel="stylesheet" href="/css/file-explorer.css">
+<link rel="stylesheet" href="/css/file-viewer.css">
+</head>
+<body>
+
+<!-- Control bar — brand + icon tools -->
+<div id="control-bar">
+  <div id="brand"><span class="brand-icon">⚡</span>barq</div>
+  <div id="tab-controls">
+    <button id="explorer-btn" class="tc-btn" title="File Explorer (Ctrl+Shift+B)">📂</button>
+    <button id="palette-btn" class="tc-btn" title="Command Palette (Ctrl+Shift+P)">⌘</button>
+    <button id="search-btn-top" class="tc-btn" title="Search (Ctrl+Shift+F)">🔎</button>
+    <span class="tc-sep"></span>
+    <button id="git-btn" class="tc-btn" title="Git">⎇</button>
+    <button id="claude-btn" class="tc-btn" title="Claude AI">🤖</button>
+    <span class="tc-sep"></span>
+    <button id="snippets-btn" class="tc-btn" title="Prompt Library">📋</button>
+    <button id="scratch-btn" class="tc-btn" title="Scratchpad (Ctrl+Shift+N)">📝</button>
+    <span class="tc-sep"></span>
+    <button id="theme-btn" class="tc-btn" title="Theme">◑</button>
+    <span id="status" title="connected">●</span>
+    <div id="theme-picker"></div>
+  </div>
+</div>
+
+<!-- Tab bar — separate row -->
+<div id="tab-bar">
+  <button id="new-tab-btn" title="New tab">+</button>
+</div>
+
+<div id="terminals-container">
+  <div id="grid-bg"></div>
+  <div id="scan-line"></div>
+  <div id="search-bar">
+    <input id="search-input" type="text" placeholder="Search… (regex)" spellcheck="false">
+    <span id="search-info">0/0</span>
+    <button class="search-btn" id="search-prev">▲</button>
+    <button class="search-btn" id="search-next">▼</button>
+    <button class="search-btn" id="search-close">✕</button>
+  </div>
+</div>
+
+<button id="scroll-fab" title="Scroll to bottom">↓</button>
+
+<div id="status-bar">
+  <span id="sb-left">⚡ barq</span>
+  <span id="sb-right"></span>
+</div>
+
+<div id="ctx-menu"></div>
+<div id="palette-overlay">
+  <div id="palette-box">
+    <input id="palette-input" type="text" placeholder="What do you want to do?" spellcheck="false" autocomplete="off">
+    <div id="palette-list"></div>
+  </div>
+</div>
+
+<textarea id="hidden-input" autocomplete="off" spellcheck="false" autofocus></textarea>
+<div id="focus-hint">Click anywhere to focus</div>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>

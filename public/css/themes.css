@@ -1,0 +1,76 @@
+/* Default (Dark) */
+:root, [data-theme="dark"] {
+  --bg:#0a0a12; --fg:#e4e4ef;
+  --ui-bg:#12121e; --ui-bg2:#0e0e18; --ui-bg3:#1a1a2a;
+  --ui-border:#1e1e30; --ui-border2:#2a2a40;
+  --ui-fg:#b0b0c0; --ui-fg2:#606080; --ui-fg3:#3a3a50;
+  --accent:#7c5bf0;
+  --c0:#686868;--c1:#ff5f5f;--c2:#5faf5f;--c3:#d7af5f;--c4:#5f87d7;--c5:#af5faf;--c6:#5fafaf;--c7:#d0d0d0;
+  --c8:#8a8a8a;--c9:#ff8787;--c10:#87d787;--c11:#ffff87;--c12:#87afd7;--c13:#d787d7;--c14:#5fd7d7;--c15:#fff;
+  --b0:#2a2a2a;--b1:#af0000;--b2:#005f00;--b3:#af8700;--b4:#005faf;--b5:#870087;--b6:#008787;--b7:#c0c0c0;
+  --b8:#4e4e4e;--b9:#d70000;--b10:#00af00;--b11:#d7d700;--b12:#0087d7;--b13:#af00d7;--b14:#00afaf;--b15:#fff;
+}
+[data-theme="dracula"] {
+  --bg:#282a36;--fg:#f8f8f2;--ui-bg:#21222c;--ui-bg2:#191a21;--ui-bg3:#343746;
+  --ui-border:#44475a;--ui-border2:#6272a4;--ui-fg:#f8f8f2;--ui-fg2:#6272a4;--ui-fg3:#44475a;--accent:#ff79c6;
+  --c0:#44475a;--c1:#ff5555;--c2:#50fa7b;--c3:#f1fa8c;--c4:#6272a4;--c5:#bd93f9;--c6:#8be9fd;--c7:#f8f8f2;
+  --c8:#6272a4;--c9:#ff6e6e;--c10:#69ff94;--c11:#ffffa5;--c12:#d6acff;--c13:#ff92df;--c14:#a4ffff;--c15:#fff;
+  --b0:#44475a;--b1:#ff5555;--b2:#50fa7b;--b3:#f1fa8c;--b4:#6272a4;--b5:#bd93f9;--b6:#8be9fd;--b7:#f8f8f2;
+  --b8:#6272a4;--b9:#ff6e6e;--b10:#69ff94;--b11:#ffffa5;--b12:#d6acff;--b13:#ff92df;--b14:#a4ffff;--b15:#fff;
+}
+[data-theme="nord"] {
+  --bg:#2e3440;--fg:#d8dee9;--ui-bg:#3b4252;--ui-bg2:#2e3440;--ui-bg3:#434c5e;
+  --ui-border:#4c566a;--ui-border2:#4c566a;--ui-fg:#d8dee9;--ui-fg2:#81a1c1;--ui-fg3:#4c566a;--accent:#88c0d0;
+  --c0:#3b4252;--c1:#bf616a;--c2:#a3be8c;--c3:#ebcb8b;--c4:#81a1c1;--c5:#b48ead;--c6:#88c0d0;--c7:#e5e9f0;
+  --c8:#4c566a;--c9:#bf616a;--c10:#a3be8c;--c11:#ebcb8b;--c12:#81a1c1;--c13:#b48ead;--c14:#8fbcbb;--c15:#eceff4;
+  --b0:#3b4252;--b1:#bf616a;--b2:#a3be8c;--b3:#ebcb8b;--b4:#81a1c1;--b5:#b48ead;--b6:#88c0d0;--b7:#e5e9f0;
+  --b8:#4c566a;--b9:#bf616a;--b10:#a3be8c;--b11:#ebcb8b;--b12:#81a1c1;--b13:#b48ead;--b14:#8fbcbb;--b15:#eceff4;
+}
+[data-theme="solarized"] {
+  --bg:#002b36;--fg:#839496;--ui-bg:#073642;--ui-bg2:#002b36;--ui-bg3:#073642;
+  --ui-border:#586e75;--ui-border2:#657b83;--ui-fg:#93a1a1;--ui-fg2:#657b83;--ui-fg3:#586e75;--accent:#b58900;
+  --c0:#073642;--c1:#dc322f;--c2:#859900;--c3:#b58900;--c4:#268bd2;--c5:#d33682;--c6:#2aa198;--c7:#eee8d5;
+  --c8:#586e75;--c9:#cb4b16;--c10:#859900;--c11:#b58900;--c12:#268bd2;--c13:#6c71c4;--c14:#2aa198;--c15:#fdf6e3;
+  --b0:#073642;--b1:#dc322f;--b2:#859900;--b3:#b58900;--b4:#268bd2;--b5:#d33682;--b6:#2aa198;--b7:#eee8d5;
+  --b8:#586e75;--b9:#cb4b16;--b10:#859900;--b11:#b58900;--b12:#268bd2;--b13:#6c71c4;--b14:#2aa198;--b15:#fdf6e3;
+}
+[data-theme="monokai"] {
+  --bg:#272822;--fg:#f8f8f2;--ui-bg:#1e1f1c;--ui-bg2:#1a1b18;--ui-bg3:#3e3d32;
+  --ui-border:#49483e;--ui-border2:#75715e;--ui-fg:#f8f8f2;--ui-fg2:#75715e;--ui-fg3:#49483e;--accent:#f92672;
+  --c0:#49483e;--c1:#f92672;--c2:#a6e22e;--c3:#e6db74;--c4:#66d9ef;--c5:#ae81ff;--c6:#a1efe4;--c7:#f8f8f2;
+  --c8:#75715e;--c9:#f92672;--c10:#a6e22e;--c11:#e6db74;--c12:#66d9ef;--c13:#ae81ff;--c14:#a1efe4;--c15:#f9f8f5;
+  --b0:#49483e;--b1:#f92672;--b2:#a6e22e;--b3:#e6db74;--b4:#66d9ef;--b5:#ae81ff;--b6:#a1efe4;--b7:#f8f8f2;
+  --b8:#75715e;--b9:#f92672;--b10:#a6e22e;--b11:#e6db74;--b12:#66d9ef;--b13:#ae81ff;--b14:#a1efe4;--b15:#f9f8f5;
+}
+[data-theme="onedark"] {
+  --bg:#282c34;--fg:#abb2bf;--ui-bg:#21252b;--ui-bg2:#1e2127;--ui-bg3:#2c313c;
+  --ui-border:#3e4451;--ui-border2:#4b5263;--ui-fg:#abb2bf;--ui-fg2:#5c6370;--ui-fg3:#3e4451;--accent:#61afef;
+  --c0:#3e4451;--c1:#e06c75;--c2:#98c379;--c3:#e5c07b;--c4:#61afef;--c5:#c678dd;--c6:#56b6c2;--c7:#abb2bf;
+  --c8:#5c6370;--c9:#be5046;--c10:#98c379;--c11:#d19a66;--c12:#61afef;--c13:#c678dd;--c14:#56b6c2;--c15:#fff;
+  --b0:#3e4451;--b1:#e06c75;--b2:#98c379;--b3:#e5c07b;--b4:#61afef;--b5:#c678dd;--b6:#56b6c2;--b7:#abb2bf;
+  --b8:#5c6370;--b9:#be5046;--b10:#98c379;--b11:#d19a66;--b12:#61afef;--b13:#c678dd;--b14:#56b6c2;--b15:#fff;
+}
+
+/* ANSI color classes */
+.ansi-bold{font-weight:bold} .ansi-dim{opacity:.85} .ansi-italic{font-style:italic}
+.ansi-underline{text-decoration:underline} .ansi-strike{text-decoration:line-through}
+
+/* Arabic/Hebrew: protect cursive joining — don't apply bold/italic which deform glyphs */
+.term-line[lang="ar"] .ansi-bold,
+.term-line[lang="he"] .ansi-bold {
+  font-weight: 500; text-decoration: overline; text-decoration-color: currentColor;
+}
+.term-line[lang="ar"] .ansi-italic,
+.term-line[lang="he"] .ansi-italic {
+  font-style: normal; text-decoration: overline; text-decoration-style: dotted;
+}
+
+.ansi-fg-0{color:var(--c0)}.ansi-fg-1{color:var(--c1)}.ansi-fg-2{color:var(--c2)}.ansi-fg-3{color:var(--c3)}
+.ansi-fg-4{color:var(--c4)}.ansi-fg-5{color:var(--c5)}.ansi-fg-6{color:var(--c6)}.ansi-fg-7{color:var(--c7)}
+.ansi-fg-8{color:var(--c8)}.ansi-fg-9{color:var(--c9)}.ansi-fg-10{color:var(--c10)}.ansi-fg-11{color:var(--c11)}
+.ansi-fg-12{color:var(--c12)}.ansi-fg-13{color:var(--c13)}.ansi-fg-14{color:var(--c14)}.ansi-fg-15{color:var(--c15)}
+
+.ansi-bg-0{background:var(--b0)}.ansi-bg-1{background:var(--b1)}.ansi-bg-2{background:var(--b2)}.ansi-bg-3{background:var(--b3)}
+.ansi-bg-4{background:var(--b4)}.ansi-bg-5{background:var(--b5)}.ansi-bg-6{background:var(--b6)}.ansi-bg-7{background:var(--b7)}
+.ansi-bg-8{background:var(--b8)}.ansi-bg-9{background:var(--b9)}.ansi-bg-10{background:var(--b10)}.ansi-bg-11{background:var(--b11)}
+.ansi-bg-12{background:var(--b12)}.ansi-bg-13{background:var(--b13)}.ansi-bg-14{background:var(--b14)}.ansi-bg-15{background:var(--b15)}

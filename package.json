@@ -1,0 +1,42 @@
+{
+  "name": "barq",
+  "version": "1.0.0",
+  "description": "Web terminal with native RTL support. DOM-based rendering, 70+ extensions, zero build step.",
+  "main": "server.js",
+  "bin": {
+    "barq": "./bin/barq.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node bin/barq.js",
+    "stop": "pkill -f 'node server.js' 2>/dev/null; echo 'Stopped'",
+    "build:pty": "cc -o pty-helper pty-helper.c 2>/dev/null || cc -o pty-helper pty-helper.c -lutil",
+    "postinstall": "npm run build:pty || true"
+  },
+  "keywords": [
+    "terminal",
+    "web-terminal",
+    "rtl",
+    "arabic",
+    "hebrew",
+    "bidi",
+    "pty",
+    "terminal-emulator",
+    "vt100",
+    "claude-code"
+  ],
+  "author": "Bashar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bacharSalleh/barq.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@fontsource/cascadia-code": "^5.2.3",
+    "express": "^4.21.0",
+    "ws": "^8.18.0"
+  }
+}
