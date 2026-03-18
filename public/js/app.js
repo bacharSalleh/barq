@@ -264,23 +264,35 @@ hiddenInput.addEventListener("keydown", (e) => {
   if (h) e.preventDefault();
 });
 
-// Paste — chunk large pastes to avoid overwhelming the PTY
+// Paste — text or image
 let justPasted = false;
 hiddenInput.addEventListener("paste", (e) => {
   e.preventDefault();
+  if (!activeSession) return;
+
+  // Check for image in clipboard
+  const items = e.clipboardData?.items;
+  if (items) {
+    for (const item of items) {
+      if (item.type.startsWith("image/")) {
+        handleImagePaste(item);
+        return;
+      }
+    }
+  }
+
+  // Text paste
   const t = (e.clipboardData || window.clipboardData || {}).getData("text");
-  if (!t || !activeSession) return;
+  if (!t) return;
   justPasted = true;
   hiddenInput.value = "";
 
   const bp = activeSession.vt.bracketedPaste;
-  const CHUNK = 1024; // send in 1KB chunks
+  const CHUNK = 1024;
 
   if (t.length <= CHUNK) {
-    // Small paste — send immediately
     activeSession.sendInput(bp ? "\x1b[200~" + t + "\x1b[201~" : t);
   } else {
-    // Large paste — chunk it with small delays so PTY can keep up
     if (bp) activeSession.sendInput("\x1b[200~");
     let offset = 0;
     function sendChunk() {
@@ -297,6 +309,32 @@ hiddenInput.addEventListener("paste", (e) => {
 
   setTimeout(() => { justPasted = false; hiddenInput.focus(); }, 200);
 });
+
+// Image paste — save to temp file, type path into terminal
+async function handleImagePaste(item) {
+  const blob = item.getAsFile();
+  if (!blob) return;
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const base64 = reader.result.split(",")[1];
+    try {
+      const res = await fetch("/api/paste-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: base64, mime: item.type }),
+      });
+      const result = await res.json();
+      if (result.path && activeSession) {
+        activeSession.sendInput(result.path);
+        if (ctx.toast) ctx.toast("Image saved — path pasted");
+      }
+    } catch (err) {
+      if (ctx.toast) ctx.toast("Failed to paste image");
+    }
+  };
+  reader.readAsDataURL(blob);
+}
 
 // Check if a modal/overlay is currently open and has focus
 function isModalActive() {
