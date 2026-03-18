@@ -417,83 +417,82 @@ window.addEventListener("resize", () => {
 // ================================================================
 // Register extensions (comment out any to disable)
 // ================================================================
-initThemes(ctx);
-initSearch(ctx);
-initPalette(ctx);
-initContextMenu(ctx);
-initBroadcast(ctx);
-initNotifications(ctx);
-initFontControls(ctx);
-initSnippets(ctx);
-initTabPersistence(ctx);
-initExport(ctx);
-initSelectionCopy(ctx);
-initSplitPanes(ctx);
-initTabDrag(ctx);
-initStatusBar(ctx);
-initFileViewer(ctx);
-initRunConfigs(ctx);
-initEnvViewer(ctx);
-initSmartCmds(ctx);
-initTabGroups(ctx);
-initWorkspaces(ctx);
-initTabPinning(ctx);
-initDiffViewer(ctx);
-initLogViewer(ctx);
-initRegexTester(ctx);
-initEnvSwitcher(ctx);
-initQuickActions(ctx);
-initStartupScript(ctx);
-initJsonViewer(ctx);
-initManViewer(ctx);
-initPerfMonitor(ctx);
-initPortForward(ctx);
-initDevUtils(ctx);
-initCheatsheet(ctx);
-initCronManager(ctx);
-initDatabaseBrowser(ctx);
-initClipboardHistory(ctx);
-initAliasManager(ctx);
-initMarkdownPreview(ctx);
-initProcessKiller(ctx);
-initColorPicker(ctx);
-initModalInput(ctx); // must be before extensions that use ctx.modal
-initRecording(ctx);
-initNetworkTools(ctx);
-initTimezone(ctx);
-initScratchpad(ctx);
-initCalculator(ctx);
-initDockerDashboard(ctx);
-initGitGraph(ctx);
-initTodoTracker(ctx);
-initSecretVault(ctx);
-initWelcome(ctx);
-initErrorHighlight(ctx);
-initQuickSwitch(ctx);
-initCommandTimer(ctx);
-initRecentDirs(ctx);
-initTabContextMenu(ctx);
-initProjectDashboard(ctx);
-initScrollFab(ctx);
-initClearScreen(ctx);
-initAIContext(ctx);  // must be before ai-prompts
-initAIPrompts(ctx);
-initAISuggest(ctx);
-initClaudeEnhance(ctx);
-initFileDrop(ctx);
-initScrollMode(ctx);
-initFileExplorer(ctx);
-initProfiles(ctx);
-initGit(ctx);
-initSSH(ctx);
-initCmdHistory(ctx);
-initProcessWatcher(ctx);
-initQuickOpen(ctx);
-
-// ================================================================
-// Boot — wait for server storage to load, then start
+// Boot — load storage first, then register extensions, then start
 // ================================================================
 store.init().then(() => {
+  initThemes(ctx);
+  initSearch(ctx);
+  initPalette(ctx);
+  initContextMenu(ctx);
+  initBroadcast(ctx);
+  initNotifications(ctx);
+  initFontControls(ctx);
+  initSnippets(ctx);
+  initTabPersistence(ctx);
+  initExport(ctx);
+  initSelectionCopy(ctx);
+  initSplitPanes(ctx);
+  initTabDrag(ctx);
+  initStatusBar(ctx);
+  initFileViewer(ctx);
+  initRunConfigs(ctx);
+  initEnvViewer(ctx);
+  initSmartCmds(ctx);
+  initTabGroups(ctx);
+  initWorkspaces(ctx);
+  initTabPinning(ctx);
+  initDiffViewer(ctx);
+  initLogViewer(ctx);
+  initRegexTester(ctx);
+  initEnvSwitcher(ctx);
+  initQuickActions(ctx);
+  initStartupScript(ctx);
+  initJsonViewer(ctx);
+  initManViewer(ctx);
+  initPerfMonitor(ctx);
+  initPortForward(ctx);
+  initDevUtils(ctx);
+  initCheatsheet(ctx);
+  initCronManager(ctx);
+  initDatabaseBrowser(ctx);
+  initClipboardHistory(ctx);
+  initAliasManager(ctx);
+  initMarkdownPreview(ctx);
+  initProcessKiller(ctx);
+  initColorPicker(ctx);
+  initModalInput(ctx); // must be before extensions that use ctx.modal
+  initRecording(ctx);
+  initNetworkTools(ctx);
+  initTimezone(ctx);
+  initScratchpad(ctx);
+  initCalculator(ctx);
+  initDockerDashboard(ctx);
+  initGitGraph(ctx);
+  initTodoTracker(ctx);
+  initSecretVault(ctx);
+  initWelcome(ctx);
+  initErrorHighlight(ctx);
+  initQuickSwitch(ctx);
+  initCommandTimer(ctx);
+  initRecentDirs(ctx);
+  initTabContextMenu(ctx);
+  initProjectDashboard(ctx);
+  initScrollFab(ctx);
+  initClearScreen(ctx);
+  initAIContext(ctx);  // must be before ai-prompts
+  initAIPrompts(ctx);
+  initAISuggest(ctx);
+  initClaudeEnhance(ctx);
+  initFileDrop(ctx);
+  initScrollMode(ctx);
+  initFileExplorer(ctx);
+  initProfiles(ctx);
+  initGit(ctx);
+  initSSH(ctx);
+  initCmdHistory(ctx);
+  initProcessWatcher(ctx);
+  initQuickOpen(ctx);
+
   if (ctx.restoreTabs) ctx.restoreTabs();
   else createSession();
 });
