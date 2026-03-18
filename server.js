@@ -68,6 +68,17 @@ app.post("/api/file", express.json({ limit: "2mb" }), (req, res) => {
   try { fs.writeFileSync(path.resolve(req.body.path), req.body.content, "utf8"); res.json({ ok: true }); }
   catch (err) { res.status(400).json({ error: err.message }); }
 });
+app.post("/api/paste-image", express.json({ limit: "10mb" }), (req, res) => {
+  try {
+    const data = req.body.data; // base64
+    if (!data) return res.status(400).json({ error: "no data" });
+    const ext = req.body.mime === "image/png" ? ".png" : req.body.mime === "image/jpeg" ? ".jpg" : ".png";
+    const filename = `barq-paste-${Date.now()}${ext}`;
+    const filepath = path.join(os.tmpdir(), filename);
+    fs.writeFileSync(filepath, Buffer.from(data, "base64"));
+    res.json({ path: filepath });
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
 app.post("/api/exec", express.json(), (req, res) => {
   const dir = (req.body.cwd && fs.existsSync(req.body.cwd)) ? req.body.cwd : os.homedir();
   try { res.json({ output: execSync(req.body.cmd, { cwd: dir, encoding: "utf8", timeout: 10000, maxBuffer: 1024 * 1024 }) }); }
