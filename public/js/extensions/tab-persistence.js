@@ -1,4 +1,5 @@
 export default function(ctx) {
+  const store = ctx.store;
   // Query cwd only on tab switch, not polling
   ctx.bus.on("session:activated", (s) => { if (s.alive) setTimeout(() => s.queryCwd(), 500); });
 
@@ -12,7 +13,7 @@ export default function(ctx) {
         cwd: s.cwd || null, // set by server response to get-cwd
       };
     });
-    localStorage.setItem("ttb-tabs", JSON.stringify(state));
+    store.setItem("ttb-tabs", JSON.stringify(state));
     for (let i = ctx.sessions.length; i < 20; i++) sessionStorage.removeItem("ttb-hist-" + i);
   }
 
@@ -24,7 +25,7 @@ export default function(ctx) {
 
   ctx.restoreTabs = function() {
     let saved = [];
-    try { saved = JSON.parse(localStorage.getItem("ttb-tabs") || "[]"); } catch {}
+    try { saved = JSON.parse(store.getItem("ttb-tabs") || "[]"); } catch {}
     if (saved.length > 0) {
       let activeIdx = 0;
       saved.forEach((t, i) => {

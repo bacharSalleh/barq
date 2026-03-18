@@ -1,9 +1,10 @@
 // Persistent scratchpad — quick notes that survive refreshes
 export default function(ctx) {
+  const store = ctx.store;
   const KEY = "ttb-scratchpad";
 
   function openPad() {
-    const saved = localStorage.getItem(KEY) || "";
+    const saved = store.getItem(KEY) || "";
 
     const overlay = document.createElement("div");
     overlay.style.cssText = "position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.6);display:flex;justify-content:center;align-items:center;backdrop-filter:blur(4px);";
@@ -39,7 +40,7 @@ export default function(ctx) {
     let saveTimer;
     ta.addEventListener("input", () => {
       clearTimeout(saveTimer);
-      saveTimer = setTimeout(() => localStorage.setItem(KEY, ta.value), 500);
+      saveTimer = setTimeout(() => store.setItem(KEY, ta.value), 500);
     });
 
     const footer = document.createElement("div");
@@ -49,7 +50,7 @@ export default function(ctx) {
     function updateCount() { footer.querySelector("#pad-count").textContent = ta.value.length + " chars"; }
     ta.addEventListener("input", updateCount);
 
-    const close = () => { localStorage.setItem(KEY, ta.value); overlay.remove(); ctx.hiddenInput.focus(); };
+    const close = () => { store.setItem(KEY, ta.value); overlay.remove(); ctx.hiddenInput.focus(); };
     closeBtn.onclick = close;
     insertBtn.onclick = () => { const s = ctx.getActive(); if (s && ta.value) s.sendInput(ta.value); close(); };
     overlay.addEventListener("click", (e) => { if (e.target === overlay) close(); });

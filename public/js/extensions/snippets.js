@@ -1,13 +1,14 @@
 // Prompt/command library — save, organize, search, and run saved prompts
 export default function(ctx) {
   const KEY = "ttb-snippets";
-  let snippets = JSON.parse(localStorage.getItem(KEY) || "[]");
+  const store = ctx.store;
+  let snippets = JSON.parse(store.getItem(KEY) || "[]");
   // Migrate old format (no category/type)
   snippets.forEach(s => {
     if (!s.category) s.category = "General";
     if (!s.type) s.type = "command";
   });
-  function save() { localStorage.setItem(KEY, JSON.stringify(snippets)); }
+  function save() { store.setItem(KEY, JSON.stringify(snippets)); }
 
   function openLibrary() {
     if (!ctx.modal) return;

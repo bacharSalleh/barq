@@ -1,8 +1,9 @@
 // Run commands automatically when a new tab opens
 export default function(ctx) {
   const KEY = "ttb-startup-cmds";
-  let cmds = JSON.parse(localStorage.getItem(KEY) || "[]");
-  function save() { localStorage.setItem(KEY, JSON.stringify(cmds)); }
+  const store = ctx.store;
+  let cmds = JSON.parse(store.getItem(KEY) || "[]");
+  function save() { store.setItem(KEY, JSON.stringify(cmds)); }
 
   // Run startup commands on new session connect
   ctx.bus.on("session:connected", (session) => {

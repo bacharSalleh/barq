@@ -8,14 +8,15 @@ const THEMES = {
 export default function(ctx) {
   const picker = document.getElementById("theme-picker");
   const btn = document.getElementById("theme-btn");
-  let current = localStorage.getItem("ttb-theme") || "dark";
+  const store = ctx.store;
+  let current = store.getItem("ttb-theme") || "dark";
   let rainAnim = null;
   const canvas = document.getElementById("matrix-rain");
   let cols = 0, drops = [];
 
   function apply(id) {
     document.documentElement.dataset.theme = id;
-    current = id; localStorage.setItem("ttb-theme", id);
+    current = id; store.setItem("ttb-theme", id);
     ctx.sessions.forEach(s => s.prevHtml.fill(""));
     ctx.scheduleRender(); build();
 

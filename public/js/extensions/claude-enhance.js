@@ -8,6 +8,7 @@ const PROMPT_RE = /^[>❯]\s*$/;
 const WAITING_RE = /What should Claude do/i;
 
 export default function(ctx) {
+  const store = ctx.store;
   // ─── Per-session Claude state ────────────────────────────────────
   const sessionState = new WeakMap();
 
@@ -208,21 +209,21 @@ export default function(ctx) {
     };
 
     // Save last 5 conversations
-    const keys = JSON.parse(localStorage.getItem('ttb-claude-conv-keys') || '[]');
+    const keys = JSON.parse(store.getItem('ttb-claude-conv-keys') || '[]');
     keys.push(key);
     while (keys.length > 5) {
       const old = keys.shift();
-      localStorage.removeItem(old);
+      store.removeItem(old);
     }
-    localStorage.setItem('ttb-claude-conv-keys', JSON.stringify(keys));
-    localStorage.setItem(key, JSON.stringify(data));
+    store.setItem('ttb-claude-conv-keys', JSON.stringify(keys));
+    store.setItem(key, JSON.stringify(data));
 
     if (ctx.toast) ctx.toast('💾 Claude conversation saved');
   }
 
   // ─── View saved conversations ────────────────────────────────────
   function viewConversations() {
-    const keys = JSON.parse(localStorage.getItem('ttb-claude-conv-keys') || '[]');
+    const keys = JSON.parse(store.getItem('ttb-claude-conv-keys') || '[]');
     if (!keys.length) {
       if (ctx.toast) ctx.toast('No saved Claude conversations');
       return;
@@ -256,7 +257,7 @@ export default function(ctx) {
 
     // Render conversation list (newest first)
     [...keys].reverse().forEach(key => {
-      const raw = localStorage.getItem(key);
+      const raw = store.getItem(key);
       if (!raw) return;
       const data = JSON.parse(raw);
       const row = document.createElement('div');
@@ -297,11 +298,11 @@ export default function(ctx) {
       delBtn.style.cssText = 'background:none;color:var(--ui-fg2);border:1px solid var(--ui-border);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px;';
       delBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        localStorage.removeItem(key);
-        const ks = JSON.parse(localStorage.getItem('ttb-claude-conv-keys') || '[]');
+        store.removeItem(key);
+        const ks = JSON.parse(store.getItem('ttb-claude-conv-keys') || '[]');
         const idx = ks.indexOf(key);
         if (idx >= 0) ks.splice(idx, 1);
-        localStorage.setItem('ttb-claude-conv-keys', JSON.stringify(ks));
+        store.setItem('ttb-claude-conv-keys', JSON.stringify(ks));
         row.remove();
       });
       btns.appendChild(copyBtn);
@@ -368,9 +369,9 @@ export default function(ctx) {
   ctx.commands.push(
     { name: '🤖 Claude: Saved Conversations', key: '', action: viewConversations },
     { name: '🤖 Claude: Clear Saved Conversations', key: '', action: () => {
-      const keys = JSON.parse(localStorage.getItem('ttb-claude-conv-keys') || '[]');
-      keys.forEach(k => localStorage.removeItem(k));
-      localStorage.removeItem('ttb-claude-conv-keys');
+      const keys = JSON.parse(store.getItem('ttb-claude-conv-keys') || '[]');
+      keys.forEach(k => store.removeItem(k));
+      store.removeItem('ttb-claude-conv-keys');
       if (ctx.toast) ctx.toast('Cleared all saved conversations');
     }},
   );

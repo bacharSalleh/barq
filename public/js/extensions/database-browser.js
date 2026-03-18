@@ -1,8 +1,9 @@
 // Quick database connections — run queries against postgres/mysql/sqlite
 export default function(ctx) {
   const KEY = "ttb-db-connections";
-  let connections = JSON.parse(localStorage.getItem(KEY) || "[]");
-  function save() { localStorage.setItem(KEY, JSON.stringify(connections)); }
+  const store = ctx.store;
+  let connections = JSON.parse(store.getItem(KEY) || "[]");
+  function save() { store.setItem(KEY, JSON.stringify(connections)); }
 
   function addConnection() {
     const type = prompt("Database type (postgres / mysql / sqlite):");

@@ -1,8 +1,9 @@
 // Tracks commands entered in the terminal and provides searchable history
 export default function(ctx) {
   const STORAGE_KEY = "ttb-cmd-history";
+  const store = ctx.store;
   const MAX_HISTORY = 500;
-  let history = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  let history = JSON.parse(store.getItem(STORAGE_KEY) || "[]");
   let currentLine = "";
 
   // Capture commands: when Enter is pressed, save the current line
@@ -20,7 +21,7 @@ export default function(ctx) {
         if (line && line.length > 1 && line !== history[history.length - 1]) {
           history.push(line);
           if (history.length > MAX_HISTORY) history.shift();
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+          store.setItem(STORAGE_KEY, JSON.stringify(history));
         }
       }
     }
@@ -109,7 +110,7 @@ export default function(ctx) {
 
   ctx.commands.push(
     { name: "Search Command History", key: "Ctrl+Shift+R", action: searchHistory },
-    { name: "Clear Command History", key: "", action: () => { history = []; localStorage.removeItem(STORAGE_KEY); } },
+    { name: "Clear Command History", key: "", action: () => { history = []; store.removeItem(STORAGE_KEY); } },
   );
 
   ctx.bus.on("shortcut:cmd-history", searchHistory);

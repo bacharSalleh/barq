@@ -1,7 +1,8 @@
 export default function(ctx) {
   const KEY = "ttb-todos";
-  let todos = JSON.parse(localStorage.getItem(KEY) || "[]");
-  function save() { localStorage.setItem(KEY, JSON.stringify(todos)); }
+  const store = ctx.store;
+  let todos = JSON.parse(store.getItem(KEY) || "[]");
+  function save() { store.setItem(KEY, JSON.stringify(todos)); }
 
   function showTodos() {
     const overlay = document.createElement("div");
