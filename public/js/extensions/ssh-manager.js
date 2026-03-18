@@ -1,8 +1,9 @@
 export default function(ctx) {
   const STORAGE_KEY = "ttb-ssh-connections";
-  let connections = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  const store = ctx.store;
+  let connections = JSON.parse(store.getItem(STORAGE_KEY) || "[]");
 
-  function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(connections)); }
+  function save() { store.setItem(STORAGE_KEY, JSON.stringify(connections)); }
 
   function addConnection() {
     const host = prompt("SSH host (e.g. user@hostname):");

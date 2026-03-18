@@ -1,7 +1,8 @@
 // Project profiles — env vars, startup commands, theme per project
 export default function(ctx) {
   const KEY = "ttb-profiles";
-  let profiles = JSON.parse(localStorage.getItem(KEY) || "{}");
+  const store = ctx.store;
+  let profiles = JSON.parse(store.getItem(KEY) || "{}");
 
   // Migrate old format (theme-only profiles)
   for (const [name, p] of Object.entries(profiles)) {
@@ -9,7 +10,7 @@ export default function(ctx) {
     if (!p.startupCmds) p.startupCmds = [];
     if (!p.cwd) p.cwd = "";
   }
-  function save() { localStorage.setItem(KEY, JSON.stringify(profiles)); }
+  function save() { store.setItem(KEY, JSON.stringify(profiles)); }
 
   function applyProfile(name) {
     const p = profiles[name];
@@ -20,13 +21,13 @@ export default function(ctx) {
     // Apply theme
     if (p.theme) {
       document.documentElement.dataset.theme = p.theme;
-      localStorage.setItem("ttb-theme", p.theme);
+      store.setItem("ttb-theme", p.theme);
     }
     // Apply font size
     if (p.fontSize) {
       document.querySelectorAll(".term-line").forEach(el => el.style.fontSize = p.fontSize + "px");
       ctx.probe.style.fontSize = p.fontSize + "px";
-      localStorage.setItem("ttb-fontsize", p.fontSize);
+      store.setItem("ttb-fontsize", p.fontSize);
     }
 
     // CD to project directory
@@ -163,7 +164,7 @@ export default function(ctx) {
       profiles[vals.name] = {
         cwd: vals.cwd || "",
         theme: vals.theme || "dark",
-        fontSize: parseInt(localStorage.getItem("ttb-fontsize")) || 14,
+        fontSize: parseInt(store.getItem("ttb-fontsize")) || 14,
         envVars: parseEnvVars(vals.envVars),
         startupCmds: parseLines(vals.startupCmds),
       };

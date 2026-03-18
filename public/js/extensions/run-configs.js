@@ -1,9 +1,10 @@
 // Save per-project run configurations (like VS Code tasks)
 export default function(ctx) {
   const STORAGE_KEY = "ttb-run-configs";
-  let configs = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  const store = ctx.store;
+  let configs = JSON.parse(store.getItem(STORAGE_KEY) || "[]");
 
-  function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(configs)); }
+  function save() { store.setItem(STORAGE_KEY, JSON.stringify(configs)); }
 
   function addConfig() {
     const name = prompt("Config name (e.g. 'Dev Server'):");

@@ -1,6 +1,7 @@
 // Encrypted secret storage — store API keys, tokens, passwords
 // Uses Web Crypto API with a user-provided passphrase
 export default function(ctx) {
+  const store = ctx.store;
   const KEY = "ttb-vault";
 
   async function deriveKey(passphrase) {
@@ -32,7 +33,7 @@ export default function(ctx) {
       const pass = vals.pass;
 
       let secrets = {};
-      const stored = localStorage.getItem(KEY);
+      const stored = store.getItem(KEY);
       if (stored) {
         try { secrets = JSON.parse(await decrypt(stored, pass)); }
         catch { if (ctx.toast) ctx.toast("Wrong passphrase"); return; }
@@ -66,7 +67,7 @@ export default function(ctx) {
     const body = document.createElement("div");
     body.style.cssText = "flex:1;overflow:auto;min-height:0;";
 
-    async function saveToDisk() { localStorage.setItem(KEY, await encrypt(JSON.stringify(secrets), pass)); }
+    async function saveToDisk() { store.setItem(KEY, await encrypt(JSON.stringify(secrets), pass)); }
 
     function render() {
       const keys = Object.keys(secrets);

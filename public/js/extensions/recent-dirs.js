@@ -1,9 +1,10 @@
 // Track and quick-jump to recent directories
 export default function(ctx) {
   const KEY = "ttb-recent-dirs";
+  const store = ctx.store;
   const MAX = 20;
-  let dirs = JSON.parse(localStorage.getItem(KEY) || "[]");
-  function save() { localStorage.setItem(KEY, JSON.stringify(dirs)); }
+  let dirs = JSON.parse(store.getItem(KEY) || "[]");
+  function save() { store.setItem(KEY, JSON.stringify(dirs)); }
 
   // Track directory changes
   ctx.bus.on("session:activated", (s) => {

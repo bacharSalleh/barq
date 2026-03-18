@@ -1,8 +1,9 @@
 // Save/restore entire terminal layouts as named workspaces
 export default function(ctx) {
   const KEY = "ttb-workspaces";
-  let workspaces = JSON.parse(localStorage.getItem(KEY) || "{}");
-  function persist() { localStorage.setItem(KEY, JSON.stringify(workspaces)); }
+  const store = ctx.store;
+  let workspaces = JSON.parse(store.getItem(KEY) || "{}");
+  function persist() { store.setItem(KEY, JSON.stringify(workspaces)); }
 
   function captureLayout() {
     return ctx.sessions.map(s => ({

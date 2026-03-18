@@ -1,6 +1,7 @@
 import { EventBus } from './event-bus.js';
 import { Session } from './session.js';
 import { detectScript } from './renderer.js';
+import store from './storage.js';
 
 // Extensions
 import initThemes from './extensions/themes.js';
@@ -136,7 +137,7 @@ const commands = [];
 
 // Context object passed to every extension
 const ctx = {
-  bus, sessions, commands, hiddenInput, probe,
+  bus, sessions, commands, hiddenInput, probe, store,
   get isSelecting() { return isSelecting; },
   set isSelecting(v) { isSelecting = v; },
   getActive: () => activeSession,
@@ -488,10 +489,12 @@ initProcessWatcher(ctx);
 initQuickOpen(ctx);
 
 // ================================================================
-// Boot
+// Boot — wait for server storage to load, then start
 // ================================================================
-if (ctx.restoreTabs) ctx.restoreTabs();
-else createSession();
+store.init().then(() => {
+  if (ctx.restoreTabs) ctx.restoreTabs();
+  else createSession();
+});
 
 // When user returns to the tab, force a fresh render
 document.addEventListener("visibilitychange", () => {

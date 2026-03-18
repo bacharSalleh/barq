@@ -7,9 +7,21 @@ const { StringDecoder } = require("string_decoder");
 const path = require("path");
 const os = require("os");
 
+const Database = require("better-sqlite3");
+
 const PORT = process.env.PORT || 3300;
 const BATCH_MS = 2;
 const IS_MAC = os.platform() === "darwin";
+
+// ─── SQLite key-value store ────────────────────────────────────
+const DB_PATH = path.join(__dirname, "barq.db");
+const db = new Database(DB_PATH);
+db.pragma("journal_mode = WAL");
+db.exec("CREATE TABLE IF NOT EXISTS kv (key TEXT PRIMARY KEY, value TEXT)");
+const dbGet = db.prepare("SELECT value FROM kv WHERE key = ?");
+const dbSet = db.prepare("INSERT OR REPLACE INTO kv (key, value) VALUES (?, ?)");
+const dbDel = db.prepare("DELETE FROM kv WHERE key = ?");
+const dbAll = db.prepare("SELECT key, value FROM kv WHERE key LIKE ?");
 
 const app = express();
 const server = http.createServer(app);
@@ -68,6 +80,35 @@ app.post("/api/file", express.json({ limit: "2mb" }), (req, res) => {
   try { fs.writeFileSync(path.resolve(req.body.path), req.body.content, "utf8"); res.json({ ok: true }); }
   catch (err) { res.status(400).json({ error: err.message }); }
 });
+// ─── Storage API (SQLite) ──────────────────────────────────────
+app.get("/api/store/:key", (req, res) => {
+  const row = dbGet.get(req.params.key);
+  res.json({ value: row ? row.value : null });
+});
+app.post("/api/store/:key", express.json({ limit: "5mb" }), (req, res) => {
+  dbSet.run(req.params.key, req.body.value);
+  res.json({ ok: true });
+});
+app.delete("/api/store/:key", (req, res) => {
+  dbDel.run(req.params.key);
+  res.json({ ok: true });
+});
+app.get("/api/store", (req, res) => {
+  const prefix = req.query.prefix || "ttb-%";
+  const rows = dbAll.all(prefix);
+  const data = {};
+  rows.forEach(r => data[r.key] = r.value);
+  res.json(data);
+});
+// Bulk import (for migration from localStorage)
+app.post("/api/store", express.json({ limit: "10mb" }), (req, res) => {
+  const tx = db.transaction((entries) => {
+    for (const [key, value] of Object.entries(entries)) dbSet.run(key, value);
+  });
+  tx(req.body);
+  res.json({ ok: true, count: Object.keys(req.body).length });
+});
+
 app.post("/api/paste-image", express.json({ limit: "10mb" }), (req, res) => {
   try {
     const data = req.body.data; // base64
