@@ -3,5 +3,5 @@ node_modules/
 *.log
 .env
 pty-helper
-barq.db
+barq.db*
 
