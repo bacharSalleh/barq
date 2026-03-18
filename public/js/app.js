@@ -1,5 +1,6 @@
 import { EventBus } from './event-bus.js';
 import { Session } from './session.js';
+import { detectScript } from './renderer.js';
 
 // Extensions
 import initThemes from './extensions/themes.js';
@@ -127,7 +128,7 @@ function updateStatus() {
   else { statusEl.textContent = "◌"; statusEl.style.color = "#888"; statusEl.title = "connecting…"; }
 }
 
-const resolveDir = () => "auto";
+const resolveDir = (text) => detectScript(text) ? "rtl" : "auto";
 let globalDir = "ltr";
 
 // Command registry (extensions push to this)
