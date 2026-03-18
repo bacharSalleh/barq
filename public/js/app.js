@@ -172,6 +172,8 @@ function createSession(cwd) {
     inp.addEventListener("keydown", (ev) => { if (ev.key === "Enter") { done(); hiddenInput.focus(); } if (ev.key === "Escape") { inp.value = s.tabLabel.textContent; done(); hiddenInput.focus(); } ev.stopPropagation(); });
   });
 
+  const size = calcSize();
+  s.resize(size.rows, size.cols);
   s.connect(s._initCwd);
   switchTo(s);
   if (ctx.saveTabState) ctx.saveTabState();
