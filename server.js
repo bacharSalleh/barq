@@ -85,14 +85,15 @@ wss.on("connection", (ws) => {
   function flush() { sendTimer = null; if (sendBuf && ws.readyState === ws.OPEN) ws.send(JSON.stringify({ type: "output", data: sendBuf })); sendBuf = ""; }
   function enqueue(chunk) { sendBuf += chunk; if (!sendTimer) sendTimer = setTimeout(flush, BATCH_MS); }
 
-  function startBridge(cwd) {
+  function startBridge(cwd, cols, rows) {
     const dir = (cwd && fs.existsSync(cwd)) ? cwd : os.homedir();
     const helperPath = path.join(__dirname, "pty-helper");
     if (!fs.existsSync(helperPath)) {
       if (ws.readyState === ws.OPEN) ws.send(JSON.stringify({ type: "output", data: "\r\nError: pty-helper not found. Run: npm run build:pty\r\n" }));
       return;
     }
-    bridge = spawn(helperPath, [], { stdio: ["pipe", "pipe", "pipe"], env: { ...process.env, TERM: "xterm-256color", COLUMNS: "120", LINES: "30" }, cwd: dir });
+    const c = String(cols || 120), r = String(rows || 30);
+    bridge = spawn(helperPath, [], { stdio: ["pipe", "pipe", "pipe"], env: { ...process.env, TERM: "xterm-256color", COLUMNS: c, LINES: r }, cwd: dir });
     bridge.stdout.on("data", buf => enqueue(decoder.write(buf)));
     bridge.stderr.on("data", buf => enqueue(decoder.write(buf)));
     bridge.on("exit", code => { if (ws.readyState === ws.OPEN) { ws.send(JSON.stringify({ type: "exit", code: code ?? 0 })); ws.close(); } });
@@ -100,7 +101,7 @@ wss.on("connection", (ws) => {
 
   ws.on("message", raw => {
     let msg; try { msg = JSON.parse(raw); } catch { return; }
-    if (msg.type === "init") { if (!bridge) startBridge(msg.cwd); return; }
+    if (msg.type === "init") { if (!bridge) startBridge(msg.cwd, msg.cols, msg.rows); return; }
     if (!bridge) return;
     if (msg.type === "input") bridge.stdin.write(msg.data);
     else if (msg.type === "resize") bridge.stdin.write(`\x1b]R;${msg.rows};${msg.cols}\x07`);

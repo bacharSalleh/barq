@@ -83,7 +83,7 @@ export class Session {
     this.ws = new WebSocket(`${proto}//${location.host}`);
 
     this.ws.onopen = () => {
-      this.ws.send(JSON.stringify({ type: "init", cwd: cwd || null }));
+      this.ws.send(JSON.stringify({ type: "init", cwd: cwd || null, cols: this.vt.cols, rows: this.vt.rows }));
       this.alive = true;
       this._reconnectDelay = 1000;
       this.tabLabel.textContent = this._customName || "Terminal " + this.id;
